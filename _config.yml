@@ -1,1 +1,5 @@
-theme: minimal
+title: HK Data
+description: Example site for sharing data
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-minimal
