@@ -1,5 +1,6 @@
 title: HK Data
 description: Example site for sharing data
+logo: /assets/img/logo.png
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-minimal
