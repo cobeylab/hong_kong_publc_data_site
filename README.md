@@ -3,9 +3,17 @@
 
 ## Site content here
 
+Some, Author. “Title title title” Journal of Flu Epi, vol. 1, no. 1, Sept. 2000, pp. 123-124, https://doi.org/10.1177/176876876868769797.
+
+[Data files](http://someurl)
+[Source code](http://someotherurl)
+
+
 ---
-layout: default
----
+
+
+## Formatting info:
+
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
