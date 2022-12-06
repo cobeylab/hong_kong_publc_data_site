@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+
+<title>Hong Kong Influenza Vaccination study | Data and R syntax</title>
+
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="Author" content="Ben Cowling">
+<meta name="date" content="2010-11-08T15:53:00+08:00">
+<meta name="keywords" lang="en" 
+  content="influenza, vaccine, statistics, reproducible">
+<meta name="description" CONTENT="Data and reproducible statistical analyses for
+the Hong Kong study of the direct and indirect benefits of
+influenza vaccine in households.">
+
+<link href="npi_style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+  <!-- spam protection
+  BC="bcow"+"ling"+"@hk"+"u.hk";
+  // -->
+</script>
+
+</head>
+
+<body>
+
+<div id="banner">
+<h1 class="center">Hong Kong vaccination study</h1>
+</div>
+
+<div id="leftcontent">
+
+<h3>Contents</h3>
+
+<p><a href="#overview">1. Study overview</a><br>
+<a href="#data">2. Data</a><br>
+<a href="#pilot">3. Pilot findings</a><br>
+<a href="#trans">4. Transmissibility</a><br>
+<a href="#resp">5. Noninfluenza infections</a><br>
+<a href="#main">6. Main findings</a><br>
+<a href="#antibody">7. Antibody response</a><br>
+<a href="#immu">8. Vaccine immunogenicity</a><br>
+<a href="#aprot">9. Antibody protection</a><br>
+<a href="#further">10. Further work</a><br>
+<a href="#authors">Authors</a><br>
+<a href="#comment">Reproducibility</a><br>
+<a href="#references">References</a><br>
+<a href="#acknowledgements">Acknowledgements</a><br></p>
+
+<!--
+<h3>Extra stuff</h3>
+
+<p>dataset: <a href="http://www.hku.hk/bcowling/data/propensity.csv">propensity.csv</a><br>
+R script: <a href="propensity.R">propensity.R</a>
+</p>
+-->
+
+</div>
+
+<div id="centercontent">
+
+<h3><a name="overview">1. Study overview</a></h3>
+
+<p>While vaccination is known to be effective in reducing
+  influenza-related morbidity in school-age children it is
+  not currently recommended in Hong Kong because few
+  infections in this age group above 2 years result in
+  significant morbidity or mortality. Also, the supply of
+  vaccines is limited and indirect costs of vaccination
+  are high.</p>
+
+<p>However, evidence from randomized trials, observational
+  studies and modeling studies has accumulated which
+  suggests that the vaccination of school-age children can
+  provide substantial indirect benefits to the rest of the
+  community, particularly to older adults who are most at
+  risk for the complications associated with influenza.
+  This approach to vaccination is known as the
+  "transmission-limiting" strategy, in contrast to the current
+  "morbidity-limiting" approach where those individuals at
+  highest risk of complications are targeted to receive the
+  vaccine.</p>
+
+<p>While the indirect benefits of vaccinating school-age
+  children against influenza have been extensively studied
+  at the community level, relatively few studies have investigated
+  whether vaccination of school-age children can lead to indirect
+  benefits at the household level, to the parents or siblings
+  of vaccinees.</p>
+  
+<p>In 2008-09 (pilot) and 2009-10 (main study) we conducted a
+  double-blind randomized controlled trial of households in Hong Kong,
+  where one child aged 6-17 from each household was randomized to
+  receive either one dose of trivalent inactivated seasonal influenza
+  vaccine, or saline placebo. Each household was followed up for
+  around a year, with serum drawn from each household member before
+  and after the study, and also from some participants during the
+  study. Subjects and household contacts were asked to keep daily
+  symptom diaries, and during episodes of acute respiratory illness in
+  any household member we arranged to collect nose and throat swabs
+  from all household members regardless of illness for laboratory
+  confirmation of influenza infection.</p>
+
+
+<h3><a name="data">2. Raw data</a></h3>
+
+<p>The latest version of the study year 1 (pilot) data (09-2008 to 12-2009) are 
+available to download as a zip file here:</p>
+<ul class="circle">
+  <li><a href="data/KiddivaxPilotV2.zip"
+  title="kiddivax pilot dataset version 1">KiddivaxPilotV2.zip</a>.
+</ul> 
+<p>This version of the dataset covers the incidence of infections and
+illnesses in household members, and serologic and virologic laboratory results.</p>
+
+<p>The latest version of the study year 2 (main) data (09-2009 to 12-2010) are 
+available to download as a zip file here:</p>
+<ul class="circle">
+  <li><a href="data/KiddivaxMainV2.zip"
+  title="kiddivax pilot dataset version 1">KiddivaxMainV2.zip</a>.
+</ul> 
+<p>This version of the dataset covers the demographics, incidence of infections and
+illnesses in household vaccinees, and serologic and virologic laboratory results.</p>
+
+<p>We provide our data under the <a 
+href="http://www.opendatacommons.org/odc-public-domain-dedication-and-licence/">Open 
+Data Commons Public Domain Dedication and License</a>, which is a version of open
+access for data. Under this licence we reserve no rights: 
+there are no restrictions on use of our data, and no requirement to cite
+our work or this website. However we would anticipate that for academic purposes the
+standard practice of referencing sources would apply. We would like to hear from 
+researchers who are using our data and we would be keen to work together on analyses.</p>
+
+
+<h3><a name="pilot">3. Pilot findings</a></h3>
+
+<p>The primary findings from the 2008-09 pilot study were published by 
+<a href="http://dx.doi.org/10.1086/657311" title="full text of Cowling et al.,
+2010, Clin Infect Dis">Cowling et al. (2010, Clin Infect Dis)</a>.
+In brief, the pilot study achieved its aim of confirming the
+feasibility of the main study design, provided some information
+about the incidence of influenza infections and illnesses, and
+provided primary evidence of temporary immunity. We found no evidence
+of indirect benefits although with only 119 households our pilot
+study was underpowered to detect even fairly large indirect effects.</p> 
+
+<p>Results presented in that manuscript are reproduced in the following scripts
+which can be run in the free (and 
+<a href="http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html" title="NYT article about R">increasingly popular</a>)
+statistical software package <a href="http://www.r-project.org"
+title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxPilot_scripts/dataframe.r">scripts</a> to reformat the raw data (used in some of the other scripts here) and <a href="kiddivaxPilot_scripts/dataframe_cross.r">scripts</a>  to reformat the raw data and adjust for cross reactivity.<br>
+<li><a href="KiddivaxPilot_scripts/Table_1.r">Table 1</a>; 
+    <a href="KiddivaxPilot_scripts/Table_2.r">Table 2</a>;
+    <a href="KiddivaxPilot_scripts/Table_3.r">Table 3</a>;
+    <a href="KiddivaxPilot_scripts/Table_4.r">Table 4</a>;
+    <a href="KiddivaxPilot_scripts/Table_5.r">Table 5</a>;
+    <a href="KiddivaxPilot_scripts/Table_6.r">Table 6</a>;
+    <a href="KiddivaxPilot_scripts/Table_7.r">Table 7</a>;
+    <a href="KiddivaxPilot_scripts/Table_8.r">Table 8</a>.<br>
+<li><a href="KiddivaxPilot_scripts/Figure_1.r">Figure 1</a>;
+    <a href="KiddivaxPilot_scripts/Figure_S1.r">Figure S1</a>;
+    <a href="KiddivaxPilot_scripts/Figure_S2.r">Figure S2</a>;
+    <a href="KiddivaxPilot_scripts/Figure_S3.r">Figure S3</a>;
+    <a href="KiddivaxPilot_scripts/Figure_S4.r">Figure S4</a>.<br>
+</ul>
+
+<h3><a name="trans">4. Transmissibility of influenza in households</a></h3>
+
+<p>We analyzed the final outbreak size distributions of pH1N1, sH1N1, sH3N2 infections identified in paired sera 
+collected from 117 Hong Kong households in April and in August-October 2009. The results were published by 
+<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3206962/">Klick et al. (2011, Epidemiology)</a>. In conclusion, pandemic and seasonal influenza A viruses had similar age-specific 
+transmissibility in a cohort of initially uninfected households, after adjustment for baseline immunity.</p> 
+
+<p>Results described in Klick et al. (2011) are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="kiddivaxPilot_Transmission_scripts/MCMC_function.r">functions</a> of the MCMC procedure (used in some of the other scripts here).<br>
+<li><a href="KiddivaxPilot_Transmission_scripts/Table_1.r">Table 1</a>;
+    <a href="KiddivaxPilot_Transmission_scripts/Table_2.r">Table 2</a>;
+    <a href="KiddivaxPilot_Transmission_scripts/eTable_2.r">eTable 2</a>;
+    <a href="KiddivaxPilot_Transmission_scripts/eTable_3.r">eTable 3</a>;
+    <a href="KiddivaxPilot_Transmission_scripts/eTable_4.r">eTable 4</a>;
+    <a href="KiddivaxPilot_Transmission_scripts/eTable_5.r">eTable 5</a>.<br>
+<li><a href="KiddivaxPilot_Transmission_scripts/Figure_1to3.r">Figure 1-3</a>.<br>
+</ul>
+
+<h3><a name="resp">5. Increased risk of noninfluenza respiratory virus infections</a></h3>
+
+<p>We randomized 115 children to TIV or placebo group. TIV recipients had an increased risk of noninfluenza respiratory virus infections over the following nine months. 
+While being protected against influenza, TIV recipients may lack of temporary non-specific immunity that protected against other respiratory viruses. The results were published 
+by <a href="http://cid.oxfordjournals.org/content/early/2012/03/13/cid.cis307.short">Cowling et al. (2012, Clin Infect Dis)</a>.</p> 
+
+<p>Results described in the manuscript are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxPilot_CID_respiratory_scripts/Table_1.r">Table 1</a>;
+    <a href="KiddivaxPilot_CID_respiratory_scripts/Table_2.r">Table 2</a>;
+    <a href="KiddivaxPilot_CID_respiratory_scripts/Table_3.r">Table 3</a>;
+    <a href="KiddivaxPilot_CID_respiratory_scripts/Appendix_Table_1.r">Appendix Table 1</a>.<br>
+<li><a href="KiddivaxPilot_CID_respiratory_scripts/Figure_1.r">Figure 1</a>;
+    <a href="KiddivaxPilot_CID_respiratory_scripts/Appendix_Figure_1.r">Appendix Figure 1</a>.<br>
+</ul>
+
+<h3><a name="main">6. Main findings</a></h3>
+
+<p>The primary findings from the 2009-10 main study were published by 
+<a href="http://cid.oxfordjournals.org/content/55/5/695" title="full text of Cowling et al.,
+2012, Clin Infect Dis">Cowling et al. (2012, Clin Infect Dis)</a>.
+In the main study, we recruited 796 children as well as their household members. Pandemic A(H1N1) circulated at the time of vaccination and for a short time 
+afterward with no substantial seasonal influenza activity during that period. We found that seasonal TIV prevented pandemic influenza A(H1N1) 
+and influenza B infections in children.</p> 
+
+<p>Results described in the manuscript are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxMain_scripts/dataframe.r">scripts</a> to reformat the raw data (used in some of the other scripts here).<br>
+<li><a href="KiddivaxMain_scripts/Table_1.r">Table 1</a>; 
+    <a href="KiddivaxMain_scripts/Table_2.r">Table 2</a>;
+    <a href="KiddivaxMain_scripts/Table_3.r">Table 3</a>;
+    <a href="KiddivaxMain_scripts/Table_S1.r">Table S1</a>;
+    <a href="KiddivaxMain_scripts/Table_S2.r">Table S2</a>;
+    <a href="KiddivaxMain_scripts/Table_S3.r">Table S3</a>;
+    <a href="KiddivaxMain_scripts/Table_S4.r">Table S4</a>.<br>
+<li><a href="KiddivaxMain_scripts/Figure_2.r">Figure 2</a>.<br>
+</ul>
+
+<h3><a name="antibody">7. Humoral antibody response after receipt of TIV</a></h3>
+
+<p>Among 119 children recruited in the pilot study, 64 children rejoined the main study and allocation of TIV/placebo in year 2 was independent of allocation in year 1. 
+<a href="http://journals.lww.com/pidj/Fulltext/2012/09000/Humoral_Antibody_Response_After_Receipt_of.24.aspx">Ng et al. (2012, Pediatr Infect Dis J)</a> studied those 64 subjects 
+and suggested that humoral antibody response to TIV may be lower in children receiving repeated vaccination, but receipt of TIV induced seroprotection in most subjects.</p>
+
+<p>Results described in the manuscript are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxMain_PIDJ_antibody_scripts/dataframe.r">scripts</a> to reformat the raw data (used in some of the other scripts here).<br>
+<li><a href="KiddivaxMain_PIDJ_antibody_scripts/Table_1.r">Table 1</a>; 
+    <a href="KiddivaxMain_PIDJ_antibody_scripts/Table_2.r">Table 2</a>;
+    <a href="KiddivaxMain_PIDJ_antibody_scripts/Table_3.r">Table 3</a>.<br>
+<li><a href="KiddivaxMain_PIDJ_antibody_scripts/Figure_1.r">Figure 1</a>.<br>
+</ul>
+
+<h3><a name="immu">8. The effect of age and recent vaccination history on the efficacy of 2009-10 seasonal TIV</a></h3>
+
+<p>There is some evidence that annual vaccination of trivalent inactivated influenza vaccine (TIV) may lead to reduced vaccine immunogenicity but evidence is lacking on whether 
+vaccine efficacy is affected by prior vaccination history. <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0059077">Ng et al. (2013, PLoS ONE)</a> investigated on the 796 children recruited in the main study, whose influenza vaccination history 
+in the two preceding years was recorded. Ng concluded that prior vaccination was associated with lower antibody responses to TIV against seasonal influenza A vaccine viruses, but 
+higher responses to the same lineage of influenza B virus.</p>
+
+<p>Results described in the manuscript are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxMain_PLoSONE_scripts/dataframe.r">scripts</a> to reformat the raw data (used in some of the other scripts here).<br>
+<li><a href="KiddivaxMain_PLoSONE_scripts/Table_2.r">Table 2</a>; 
+    <a href="KiddivaxMain_PLoSONE_scripts/Table_3.r">Table 3</a>;
+    <a href="KiddivaxMain_PLoSONE_scripts/Table_S1.r">Table S1</a>;
+    <a href="KiddivaxMain_PLoSONE_scripts/Table_S2.r">Table S2</a>;
+    <a href="KiddivaxMain_PLoSONE_scripts/Table_S3.r">Table S3</a>;
+    <a href="KiddivaxMain_PLoSONE_scripts/Table_S4.r">Table S4</a>.<br>
+<li><a href="KiddivaxMain_PLoSONE_scripts/Figure_1.r">Figure 1</a>;
+    <a href="KiddivaxMain_PLoSONE_scripts/Figure_S2.r">Figure S2</a>.<br>
+</ul>
+
+<h3><a name="aprot">9. The association between antibody titers and protection against influenza</a></h3>
+
+<p>Antibody titers measured by hemagglutination inhibition (HAI) correlate with protection against influenza virus infection and are used to specify criteria for vaccine licensure. <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3778972/">Ng et al. (2013, JID)</a> investigated on the 773 children recruited in the main study with HAI titers available, and found that HAI titers of 1:40 against A(H1N1)pdm09 and B(Victoria lineage) were associated with 48% and 55% protection against PCR-confirmed infection with each strain.</p>
+
+<p>Results described in the manuscript are reproduced in the following scripts which can be run in <a href="http://www.r-project.org" title="R statistical software homepage">R</a>:</p>
+
+<ul class="circle">
+<li><a href="KiddivaxMain_JID_titerprot_scripts/source_1.r">source 1; </a> 
+<a href="KiddivaxMain_JID_titerprot_scripts/source_2.r">source 2; </a>
+<a href="KiddivaxMain_JID_titerprot_scripts/source_3.r">source 3; </a>
+<a href="KiddivaxMain_JID_titerprot_scripts/source_4.r">source 4; </a>
+<a href="KiddivaxMain_JID_titerprot_scripts/source_5.r">source 5; </a>
+<a href="KiddivaxMain_JID_titerprot_scripts/source_6.r">source 6 </a>(used in some of the other scripts here).<br>
+<li><a href="KiddivaxMain_JID_titerprot_scripts/Figure_1.r">Figure 1</a>; 
+    <a href="KiddivaxMain_JID_titerprot_scripts/Figure_2.r">Figure 2</a>; 
+    <a href="KiddivaxMain_JID_titerprot_scripts/Appendix_Figure_1.r">Appendix Figure 1</a>.<br>
+<li><a href="KiddivaxMain_JID_titerprot_scripts/Appendix_Table_1.r">Appendix Table 1</a>;
+    <a href="KiddivaxMain_JID_titerprot_scripts/Appendix_Table_2.r">Appendix Table 2</a>.<br>
+</ul>
+
+<h3><a name="further">10. Further work</a></h3>
+
+<p>We have a series of further analyses underway using the
+data from our study. More details will follow later.</p>
+
+<br>
+
+
+
+<h3><a name="authors">Authors and investigators</a></h3>
+
+<p>The principal investigator of this study is
+<a href="https://sph.hku.hk/en/Biography/Cowling-Benjamin-John">Ben Cowling</a>. The data were uploaded by 
+<a href="https://sph.hku.hk/en/Biography/Cowling-Benjamin-John">Ben Cowling</a>, and the scripts were written by
+<a href="https://sph.hku.hk/en/Biography/Cowling-Benjamin-John">Ben Cowling</a>, Vicky Fang, Brendan Klick, and Sophia Ng.</p>
+
+
+<h3><a name="comment">A comment on reproducible research</a></h3>
+
+<p>We fully support the <a href="http://dx.doi.org/10.1097/EDE.0b013e318196784a">increasing calls</a>
+from the academic community for 
+<a href="http://dx.doi.org/10.1093/aje/kwj093" title="Peng et al., 2006, AJE">epidemiologic analyses to be reproducible</a>,
+and <a href="http://dx.doi.org/10.1186/1745-6215-10-17" title="Hrynaszkiewicz and Altman, 2009, Trials">raw data from randomized controlled trials to be published</a>, as a part of the wider scientific endeavour to
+replicate results.
+Another example of this recommendation is in the <a
+href="http://www.qve-goodpracticeguide.org.uk/guide#TOC-2.4-Inputs">Good
+Practice Guide for Quantitative Veterinary Epidemiology</a>. 
+Here we have published the raw <em>anonymised</em> data from our HK vaccination
+pilot study, and will later release the data from our main study. We have also published
+scripts which allow the analyses in our published papers to be reproduced.</p>
+
+<p>Thousands of local people have given their time, and their families', as part of their
+participation in our studies,
+all in the expectation that our research studies will add to medical and scientific knowledge.
+Participants should also expect that we will make the best possible use of the information that
+we have collected about them. It would be difficult to argue that facilitating
+best use of the data by the research community need not involve releasing raw data.</p>
+
+<p>Publication of anonymised raw data has been approved by our local IRB and funding sources,
+and participants were advised that anonymised data would be published during the informed consent
+process. We anticipate that release of the raw data will:</p>
+<ul class="circle">
+ <li>Promote reproducibility of our results.
+ <li>Allow other investigators to conduct their own analyses on our data.
+ <li>Allow other investigators to compare our data with theirs, for
+   example to explore similarities and differences between research findings.
+ <li>Allow other investigators to prepare and plan for their own studies.
+</ul>
+
+
+
+<h3><a name="references">Publications</a></h3>
+
+<ol>
+<li><a name="ref1">Cowling BJ,</a> Ng S, Ma ESK, Cheng CKY, Wai W, Fang VJ, Chan KH, Ip DKM, Chiu SS, 
+Peiris JSM, and Leung GM. Protective efficacy of seasonal influenza vaccination against seasonal and 
+pandemic influenza virus infection during 2009 in Hong Kong.
+<i>Clinical Infectious Diseases</i>, 2010; 51(12):1370-9.
+<a href="http://dx.doi.org/10.1086/657311">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/21067351">[PubMed]</a>.<br>
+
+<li><a name="ref2">Klick B,</a> Nishiura H, Ng S, Fang VJ, Leung GM, Peiris JSM, and Cowling BJ. 
+Transmissibility of seasonal and pandemic influenza in a cohort of households in Hong Kong in 2009.
+<i>Epidemiology</i>, 2011; 22(6):793-6.
+<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3206962/">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/21878814">[PubMed]</a>.<br>
+
+<li><a name="ref3">Cowling BJ,</a> Fang VJ, Nishiura H, Chan KH, Ng S, Ip DKM, Chiu SS, Leung GM and Peiris JSM. 
+Increased risk of noninfluenza respiratory virus infections associated with receipt of inactivated influenza vaccine.
+<i>Clinical Infectious Diseases</i>, 2012; 54(12):1778-83.
+<a href="http://cid.oxfordjournals.org/content/54/12/1778">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/22423139">[PubMed]</a>.<br>
+
+<li><a name="ref4">Cowling BJ,</a> Ng S, Ma ES, Fang VJ, So HC, Wai W, Cheng KY, Wong JY, Chan KH, Ip DKM, Chiu SS, Peiris JSM, and Leung GM. 
+Protective Efficacy Against Pandemic Influenza of Seasonal Influenza Vaccination in Children in Hong Kong: A Randomized Controlled Trial.
+<i>Clinical Infectious Diseases</i>, 2012; 55(5):695-702.
+<a href="http://cid.oxfordjournals.org/content/55/5/695">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/22670050">[PubMed]</a>.<br>
+
+<li><a name="ref5">Ng S,</a> Fang VJ, Ip DKM, Chiu SS, Leung GM, Peiris JSM, and Cowling BJ. 
+Humoral Antibody Response after Receipt of Inactivated Seasonal Influenza Vaccinations One Year Apart in Children.
+<i>The Pediatric Infectious Disease Journal</i>, 2012; 31(9):964-9.
+<a href="http://journals.lww.com/pidj/Fulltext/2012/09000/Humoral_Antibody_Response_After_Receipt_of.24.aspx">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/22683675">[PubMed]</a>.<br>
+
+<li><a name="ref6">Ng S,</a> Ip DKM, Fang VJ, Chan KH, Chiu SS, Leung GM, Peiris JSM, and Cowling BJ. 
+The effect of age and recent influenza vaccination history on the immunogenicity and efficacy of 2009-10 seasonal trivalent inactivated influenza vaccination in children.
+<i>PLoS ONE</i>, 2013; 8(3):e59077.
+<a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0059077">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/23554974">[PubMed]</a>.<br>
+
+<li><a name="ref7">Ng S,</a> Fang VJ, Ip DKM, Chan KH, Leung GM, Peiris JSM, and Cowling BJ. 
+Estimation of the association between antibody titers and protection against confirmed influenza virus infection in children.
+<i>The Journal of Infectious Diseases</i>, 2013; 208(8):1320-4.
+<a href="http://jid.oxfordjournals.org/content/208/8/1320.long">[link]</a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/23908481">[PubMed]</a>.<br>
+  
+</ol>
+
+
+
+
+<h3><a name="acknowledgements">Acknowledgements</a></h3>
+
+<p>The pilot study (2008-09) was funded by the Area of Excellence
+Scheme of the Hong Kong University Grants Committee (grant no. AoE/M-12/06)
+and the Research Fund for the Control of Infectious Disease, Food and
+Health Bureau, Government of the Hong Kong SAR (grant no. PHE-02).</p>
+
+<p>The main study (2009-10) was funded by the Research Fund for the
+Control of Infectious Disease, Food and
+Health Bureau, Government of the Hong Kong SAR (grant no. CHP-CE-03).</p>
+
+<p>Further analyses are supported by the Area of Excellence Scheme of
+the Hong Kong University Grants Committee (grant no. AoE/M-12/06), and
+the Harvard Center for Communicable Disease Dynamcs from the US
+National Institutes of Health Models of Infectious Disease Agent
+Study program (grant no. 1 U54 GM088558).</p>
+
+
+<br><hR>
+
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">
+<img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png">
+</a>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>. It was written by <a href="https://sph.hku.hk/en/Biography/Cowling-Benjamin-John">Ben Cowling</a>
+<script type="text/javascript"><!--
+document.write('<a href=\"mailto:'+BC+'\">(email)<\/a>.');
+// --> </script>
+<br>
+
+<i>This page was last modified on
+<script type="text/javascript">
+<!-- date last modified
+var LMdate = new Date(document.lastModified);
+var Months = new Array(13);
+Months[1] = "January";  Months[2] = "February";  Months[3] = "March";
+Months[4] = "April";  Months[5] = "May";  Months[6] = "June";
+Months[7] = "July"; Months[8] = "August";  Months[9] = "September";
+Months[10] = "October"; Months[11] = "November"; Months[12] = "December";
+var LMday =   LMdate.getDate();
+var LMmonth = Months[LMdate.getMonth() + 1];
+var LMyear =  LMdate.getYear();
+if (LMyear < 2000) LMyear = LMyear + 1900;
+document.write(LMmonth + " " + LMday + ", " + LMyear+".");
+// -->
+</script></i><br><br>
+
+
+<a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-html401-blue"
+        alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=4357841; 
+var sc_invisible=0; 
+var sc_partition=55; 
+var sc_click_stat=1; 
+var sc_security="ae9ba1a5"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+<noscript><div class="statcounter"><a title="web stats" 
+href="http://www.statcounter.com/free_web_stats.html"><img class="statcounter" 
+src="http://c.statcounter.com/4357841/0/ae9ba1a5/0/" alt="web stats" ></a></div></noscript>
+<!-- End of StatCounter Code -->
+
+<br><br>
+
+
+</div>
+
+<div id="rightcontent">
+
+<!--
+<h3 align="center">Authors</h3>
+
+<p align="center"><a href="https://sph.hku.hk/en/Biography/Cowling-Benjamin-John">Ben Cowling</a><br>
+<a href="faculty_and_staff_detail.php?id=57">Vicky Fang</a><br></p>
+-->
+
+</div>
+
+
+</body>
+
+</html>
