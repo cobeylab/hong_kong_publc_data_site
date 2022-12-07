@@ -34,6 +34,13 @@ plugins:
   - jekyll-feed
   - jekyll-remote-theme
 
+
+# Theme settings
+github:
+  zip_url: https://github.com/cobeylab/hk_data/releases/download/2022/hk-data-2022.zip
+  tar_url: https://github.com/cobeylab/hk_data/releases/download/2022/hk-data-2022.tar.gz
+
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
