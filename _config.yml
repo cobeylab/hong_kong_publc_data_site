@@ -27,6 +27,7 @@ description: >-
   Data and source code for influenza research from at The University of Hong Kong School of Public Health under Professor Benjamin Cowling.
 baseurl: ""
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+repository: cobeylab/hk_data
 
 # Build settings
 plugins:
